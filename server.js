@@ -36,7 +36,7 @@ app.use(express.urlencoded({ extended: false }));
 //turn on routes
 app.use(routes);
 
-// app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 //turn on connection to db and server
 
