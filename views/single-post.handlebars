@@ -1,13 +1,18 @@
-{{> post-info post }}
+{{!-- {{> post-info post }} --}}
+  <div class="title">
+    <h3>{{post.title}}</h3>
+    <span>({{post.post_body}})</span>
+  </div>
 
 {{#if loggedIn}}
 <form class="comment-form">
+  <input type="hidden" name="post_id" value="{{post.id}}" />
   <div>
     <textarea name="comment-body"></textarea>
   </div>
 
   <div>
-    <button type="submit">add comment</button>
+    <button type="submit">Add comment</button>
   </div>
 </form>
 {{/if}}
@@ -16,5 +21,4 @@
 
 {{#if loggedIn}}
 <script src="/javascript/comment.js"></script>
-<script src="/javascript/upvote.js"></script>
 {{/if}}
