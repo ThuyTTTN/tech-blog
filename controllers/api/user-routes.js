@@ -4,11 +4,12 @@ const { User, Post, Comment } = require("../../models");
 
 // POST /api/users
 router.post("/", (req, res) => {
-  // expects {username: 'Lernantino', email: 'lernantino@gmail.com', password: 'password1234'}
+
   User.create({
     username: req.body.username,
     password: req.body.password,
-  }).then((dbUserData) => {
+  })
+  .then((dbUserData) => {
     req.session.save(() => {
       req.session.user_id = dbUserData.id;
       req.session.username = dbUserData.username;
@@ -19,6 +20,7 @@ router.post("/", (req, res) => {
   });
 });
 
+//POST login page
 router.post("/login", (req, res) => {
   User.findOne({
     where: {
@@ -47,6 +49,7 @@ router.post("/login", (req, res) => {
   });
 });
 
+//POST /logout page
 router.post('/logout', (req, res) => {
   if (req.session.loggedIn) {
     req.session.destroy(() => {
@@ -60,9 +63,8 @@ router.post('/logout', (req, res) => {
 });
 
 
-// PUT /api/users/1
+// PUT update a user
 router.put("/:id", (req, res) => {
-  // expects {username: 'Lernantino', password: 'password1234'}
 
   // if req.body has exact key/value pairs to match the model, you can just use `req.body` instead
   User.update(req.body, {
@@ -84,7 +86,7 @@ router.put("/:id", (req, res) => {
     });
 });
 
-// DELETE /api/users/1
+// DELETE a user
 router.delete("/:id", (req, res) => {
   User.destroy({
     where: {

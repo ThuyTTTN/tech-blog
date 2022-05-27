@@ -1,0 +1,19 @@
+<!-- signup -->
+<section>
+  <h2>Create a new accout:</h2>
+  <form class="signup-form">
+    <div>
+      <label for="username-signup">Username:</label>
+      <input type="text" id="username-signup" />
+    </div>
+    <div>
+      <label for="password-signup">Password:</label>
+      <input type="password" id="password-signup" />
+    </div>
+    <div>
+      <button type="submit">signup</button>
+    </div>
+  </form>
+</section>
+
+<script src="/javascript/signup.js"></script>

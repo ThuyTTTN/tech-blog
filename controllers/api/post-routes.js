@@ -2,8 +2,8 @@ const router = require("express").Router();
 const { Post, User, Comment } = require("../../models");
 const withAuth = require("../../utils/auth");
 
+//POST create a new post 
 router.post("/", withAuth, (req, res) => {
-  // expects {title: 'Taskmaster goes public!', post_url: 'https://taskmaster.com/press', user_id: 1}
   Post.create({
     ...req.body,
     user_id: req.session.user_id,
@@ -15,6 +15,7 @@ router.post("/", withAuth, (req, res) => {
     });
 });
 
+//PUT update a post
 router.put("/:id", withAuth, (req, res) => {
   Post.update({
     title: req.body.title,
@@ -40,6 +41,7 @@ router.put("/:id", withAuth, (req, res) => {
     });
 });
 
+// DELETE a post
 router.delete("/:id", withAuth, (req, res) => {
   Post.destroy({
     where: {

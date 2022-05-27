@@ -4,7 +4,7 @@
 const router = require('express').Router();
 const { Post, User, Comment } = require('../models');
 
-
+//GET api/home for logged in users
 router.get('/', (req, res) => {
   console.log(req.session);
 
@@ -39,10 +39,9 @@ router.get('/', (req, res) => {
           console.log(err);
           res.status(500).json(err);
         });
-
   });
 
-
+//GET /login
 router.get('/login', (req, res) => {
   if (req.session.loggedIn) {
     res.redirect('/');
@@ -51,12 +50,22 @@ router.get('/login', (req, res) => {
   res.render('login');
 });
 
+//GET /signup
+router.get('/signup', (req, res) => {
+  if (req.session.loggedIn) {
+    res.redirect('/');
+    return;
+  }
+  res.render('signup');
+});
 
+//GET /single post for logged in user
 router.get('/post/:id', (req, res) => {
   Post.findOne({
     where: {
       id: req.params.id
     },
+    
     include: [User,
       {
         model: Comment,

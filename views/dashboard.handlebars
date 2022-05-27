@@ -5,10 +5,12 @@
   <ol>
     {{#each posts as |post|}}
     <li>
-      <a href="/dashboard/edit/{{post.id}}" class="edit-link">{{post.title}}</a>
+      {{> post-info post}}
+      <a href="/dashboard/edit/{{post.id}}"><button type="submit" class="btn">Edit Post</button></a>
     </li>
     {{/each}}
   </ol>
+  <a href="/dashboard/create"><button type="submit" class="btn">Create Post</button></a>
 </section>
 {{/if}}
 

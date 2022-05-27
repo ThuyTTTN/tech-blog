@@ -19,13 +19,14 @@ router.get("/", withAuth, (req, res) => {
       console.log(err);
       res.status(500).json(err);
     });
-});
-
-// create a route that renders the new post and make the new post handlebar be its own page
+});  
 
 router.get("/edit/:id", withAuth, (req, res) => {
-  Post.findOne(req.params.id)
-  
+  Post.findOne( {
+    where: {
+      id: req.params.id
+    },
+  })
     .then((dbPostData) => {
       if (dbPostData) {
         const post = dbPostData.get({ plain: true });
