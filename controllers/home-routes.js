@@ -1,95 +1,93 @@
 //this file will contain all the user-facing routes: homepage and login page
 
 //set up the main homepage route
-const router = require('express').Router();
-const { Post, User, Comment } = require('../models');
+const router = require("express").Router();
+const { Post, User, Comment } = require("../models");
+const sequelize = require("../config/connection");
 
 //GET api/home for logged in users
-router.get('/', (req, res) => {
+router.get("/", (req, res) => {
   console.log(req.session);
 
-    Post.findAll({
-        include: [
-          {
-            model: Comment,
-            include: {
-              model: User,
-              attributes: ['username']
-            }
-          },
-          {
-            model: User,
-            attributes: ['username']
-          }
-        ]
-      })
-        .then(dbPostData => {
-          // pass a single post object into the homepage template
-        //   console.log(dbPostData[0]);
+  Post.findAll({
+    include: [
+      {
+        model: Comment,
+      },
+      {
+        model: User,
+      },
+    ],
+  })
+    .then((dbPostData) => {
+      // pass a single post object into the homepage template
+      //   console.log(dbPostData[0]);
 
-        const posts = dbPostData.map(post => post.get({ plain: true }));
+      const posts = dbPostData.map((post) => post.get({ plain: true }));
 
-        res.render('homepage', {
-          posts,
-          loggedIn: req.session.loggedIn
-        });
-        
-        })
-        .catch(err => {
-          console.log(err);
-          res.status(500).json(err);
-        });
-  });
+      res.render("homepage", {
+        posts,
+        loggedIn: req.session.loggedIn,
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json(err);
+    });
+});
 
 //GET /login
-router.get('/login', (req, res) => {
+router.get("/login", (req, res) => {
   if (req.session.loggedIn) {
-    res.redirect('/');
+    res.redirect("/");
     return;
   }
-  res.render('login');
+  res.render("login");
 });
+
 
 //GET /signup
-router.get('/signup', (req, res) => {
+router.get("/signup", (req, res) => {
   if (req.session.loggedIn) {
-    res.redirect('/');
+    res.redirect("/");
     return;
   }
-  res.render('signup');
+  res.render("signup");
 });
 
+
 //GET /single post for logged in user
-router.get('/post/:id', (req, res) => {
+router.get("/post/:id", (req, res) => {
   Post.findOne({
     where: {
-      id: req.params.id
+      id: req.params.id,
     },
-    
-    include: [User,
+
+    include: [
+      User,
       {
         model: Comment,
         include: {
-          model: User
-        }
+          model: User,
+        },
       },
-    ]
+    ],
   })
-    .then(dbPostData => {
+    .then((dbPostData) => {
       if (!dbPostData) {
-        res.status(404).json({ message: 'No post found with this id' });
+        res.status(404).json({ message: "No post found with this id" });
         return;
       }
       // serialize the data
       const post = dbPostData.get({ plain: true });
-      console.log(post)
+      console.log(post);
       // pass data to template
-      res.render('single-post', {
+      res.render("single-post", {
         post,
-        loggedIn: req.session.loggedIn
+        loggedIn: req.session.loggedIn,
       });
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
       res.status(500).json(err);
     });

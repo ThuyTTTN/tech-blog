@@ -2,6 +2,16 @@ const router = require("express").Router();
 const { Comment } = require("../../models");
 const withAuth = require("../../utils/auth");
 
+//GET all comments
+router.get('/', (req, res) => {
+  Comment.findAll()
+    .then(dbCommentData => res.json(dbCommentData))
+    .catch(err => {
+      console.log(err);
+      res.status(500).json(err);
+    });
+});
+
 //POST a new comment
 router.post("/", withAuth, (req, res) => {
   // check the session
