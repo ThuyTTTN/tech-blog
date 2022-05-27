@@ -79,7 +79,6 @@ router.put("/:id", withAuth, (req, res) => {
       title: req.body.title,
       post_body: req.body.post_body,
     },
-
     {
       where: {
         id: req.params.id,
