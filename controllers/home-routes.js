@@ -87,10 +87,10 @@ router.get("/login", (req, res) => {
 
 //GET /signup
 router.get("/signup", (req, res) => {
-  if (req.session.loggedIn) {
-    res.redirect("/");
-    return;
-  }
+  // if (req.session.loggedIn) {
+  //   res.redirect("/");
+  //   return;
+  // }
   res.render("signup");
 });
 

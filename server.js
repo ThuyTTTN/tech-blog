@@ -21,6 +21,10 @@ const sess = {
   saveUninitialized: true,
   store: new SequelizeStore({
     db: sequelize,
+    //checks for session expiration every 15 minutes
+    checkExpirationInterval: 15 * 60 * 1000,
+    //session expires in 24 hours
+    expiration: 24 * 60 * 1000
   }),
 };
 
@@ -36,7 +40,6 @@ app.engine("handlebars", hbs.engine);
 app.set("view engine", "handlebars");
 
 //serve static files from public folder
-
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

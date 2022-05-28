@@ -16,8 +16,11 @@ router.get('/', (req, res) => {
 router.post("/", withAuth, (req, res) => {
   // check the session
   Comment.create({
-    ...req.body,
-    user_id: req.session.user_id,
+    // ...req.body,
+    username: req.body.username,
+    comment_text: req.body.comment_text,
+    user_id: req.session.user_id,post_id: req.body.post_id,
+    
   })
     .then((dbCommentData) => res.json(dbCommentData))
     .catch((err) => {
@@ -27,31 +30,31 @@ router.post("/", withAuth, (req, res) => {
 });
 
 //PUT update a comment
-router.put("/:id", withAuth, (req, res) => {
-  Comments.update(
-    {
-      content: req.body.content,
-    },
-    {
-      where: {
-        id: req.params.id,
-      },
-    }
-  )
-    // send the response
-    .then((dbCommentData) => {
-      if (!dbCommentData) {
-        res.status(404).json({ message: "No comment found with this id" });
-        return;
-      }
-      res.json(dbCommentData);
-    })
-    // catch any errors
-    .catch((err) => {
-      console.log(err);
-      res.status(500).json(err);
-    });
-});
+// router.put("/:id", withAuth, (req, res) => {
+//   Comment.update(
+//     {
+//       comment_text: req.body.comment_text,
+//     },
+//     {
+//       where: {
+//         id: req.params.id,
+//       },
+//     }
+//   )
+//     // send the response
+//     .then((dbCommentData) => {
+//       if (!dbCommentData) {
+//         res.status(404).json({ message: "No comment found with this id" });
+//         return;
+//       }
+//       res.json(dbCommentData);
+//     })
+//     // catch any errors
+//     .catch((err) => {
+//       console.log(err);
+//       res.status(500).json(err);
+//     });
+// });
 
 //DELETE a comment
 router.delete("/:id", withAuth, (req, res) => {

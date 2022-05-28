@@ -61,7 +61,9 @@ router.get('/:id', (req, res) => {
 //POST create a new post
 router.post("/", withAuth, (req, res) => {
   Post.create({
-    ...req.body,
+    // ...req.body,
+    title: req.body.title,
+    post_body: req.body.post,
     user_id: req.session.user_id,
   })
     .then((dbPostData) => res.json(dbPostData))
@@ -70,7 +72,6 @@ router.post("/", withAuth, (req, res) => {
       res.status(500).json(err);
     });
 });
-
 
 //PUT update a post
 router.put("/:id", withAuth, (req, res) => {
