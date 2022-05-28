@@ -1,12 +1,16 @@
-<div class="comments">
-  {{#each this}}
-  <section class="comment">
-    <div class="meta">
-      {{user.username}} on {{format_date createdAt}}
+<section class="comments card">
+    <div class="card-header">Comments</div>
+    {{#if this}}
+    {{#each this}}
+        <div class="comment">
+            <p>{{comment_text}}</p>
+            <p>User:{{user.username}} created on {{format_date createdAt}}</p>
+        </div>
+    {{/each}}
+    {{else}}
+        <div class="comment">
+            <p>There are no comments!</p>
+        </div>
+    {{/if}}
     </div>
-    <div class="text">
-      {{comment_text}}
-    </div>
-  </section>
-  {{/each}}
-</div>
+</section>

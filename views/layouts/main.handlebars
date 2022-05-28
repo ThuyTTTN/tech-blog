@@ -1,45 +1,41 @@
-<!DOCTYPE html>
 <html lang="en">
 
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tech Blog</title>
-    {{!-- <link rel="stylesheet" href="/stylesheets/style.css" /> --}}
-    <link rel="stylesheet" href="\stylesheets\style.css" />
+    <link rel="stylesheet" href="\stylesheets\style.css" /><title>Tech Blog</title>
+
   </head>
 
-  <body>
-    <div class="wrapper">
-      <header>
-        <h1>
-          <a href="/">Tech Blog</a>
-        </h1>
-        <nav>
-          <ul class="navbar">
+  <body class="flex-column min-100-vh">
+    <header>
+      <nav class="nav">
+        <ul>
+          <li>
+            <a href="/">Home</a>
+          </li>
+          {{#if loggedIn}}
             <li>
               <a href="/dashboard">Dashboard</a>
             </li>
-            
-          </ul>
-          {{#if loggedIn}}
             <button id="logout" class="btn-no-style">Logout</button>
           {{else}}
-            <a href="/login">Login</a>
-            <a href="/signup">Signup</a>
+            <li>
+              <a href="/login">Login</a>
+              <a href="/signup">Signup</a>
+            </li>
           {{/if}}
-        </nav>
-      </header>
-      <main>
-        {{{body}}}
-      </main>
-      <footer>
-        Thanks for visiting!
-      </footer>
-    </div>
+        </ul>
+      </nav>
+      <h1 class="pg-title">Tech Blog</h1>
+    </header>
+
+    <main>
+      {{{body}}}
+    </main>
+
     {{#if loggedIn}}
       <script src="/javascript/logout.js"></script>
     {{/if}}
   </body>
-
 </html>

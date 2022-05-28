@@ -1,16 +1,19 @@
-
 <div class="title">
   <h3>{{post.title}}</h3>
   <span>({{post.post_body}})</span>
 </div>
 
 {{#if loggedIn}}
-<form class="comment-form">
-
-  <div>
-    <textarea name="comment-body"></textarea>
-    <button type="submit">Add comment</button>
-  </div>
+<form class="comment-form card">
+    <div class="card-header">Add New Comment</div>
+    <div class="comment-form-body">
+        <div>
+            <textarea name="comment-body" class="form-textarea"></textarea>
+        </div>
+        <div>
+            <button type="submit" class="btn">Add Comment</button>
+        </div>
+    </div>
 </form>
 {{/if}}
 
