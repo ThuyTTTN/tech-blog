@@ -2,17 +2,17 @@
 {{#if posts.length}}
 <section>
   <h2>Your Posts</h2>
-  <ol>
+  <ul>
     {{#each posts as |post|}}
     <li>
       {{> post-info post}}
-      <a href="/dashboard/edit/{{post.id}}"><button type="submit" class="btn">Edit Post</button></a>
+      <button type="submit" class="btn"><a href="/dashboard/edit/{{post.id}}">Edit Post</a></button>
     </li>
     {{/each}}
-  </ol>
-  <a href="/dashboard/create"><button type="submit" class="btn">Create Post</button></a>
+  </ul>
+  <button type="submit" class="btn"><a href="/dashboard/create">Create Post</a></button>
+
 </section>
 {{/if}}
-
 
 <script src="/javascript/add-post.js"></script>

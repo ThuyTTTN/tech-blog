@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Tech Blog</title>
     {{!-- <link rel="stylesheet" href="/stylesheets/style.css" /> --}}
+    <link rel="stylesheet" href="\stylesheets\style.css" />
   </head>
 
   <body>
@@ -15,8 +16,13 @@
           <a href="/">Tech Blog</a>
         </h1>
         <nav>
+          <ul class="navbar">
+            <li>
+              <a href="/dashboard">Dashboard</a>
+            </li>
+            
+          </ul>
           {{#if loggedIn}}
-            <a href="/dashboard">Dashboard</a>
             <button id="logout" class="btn-no-style">Logout</button>
           {{else}}
             <a href="/login">Login</a>
