@@ -3,7 +3,6 @@
 //set up the main homepage route
 const router = require("express").Router();
 const { Post, User, Comment } = require("../models");
-const sequelize = require("../config/connection");
 
 //GET api/home for logged in users
 router.get("/", (req, res) => {

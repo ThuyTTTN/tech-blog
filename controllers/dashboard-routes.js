@@ -10,7 +10,27 @@ router.get("/", withAuth, (req, res) => {
       // use the ID from the session
       user_id: req.session.user_id,
     },
-  })
+    attributes: [
+      'id',
+      'title',
+      'post_body',
+      'createdAt'
+  ],
+  include: [
+      {
+          model: Comment,
+          attributes: ['id', 'comment_text', 'post_id', 'user_id', 'createdAt'],
+          include: {
+              model: User,
+              attributes: ['username']
+          }
+      },
+      {
+          model: User,
+          attributes: ['username']
+      }
+  ]
+})
     .then((dbPostData) => {
       // serialize data before passing to template
       const post = dbPostData.map((post) => post.get({ plain: true }));
@@ -27,7 +47,30 @@ router.get("/edit/:id", withAuth, (req, res) => {
     where: {
       id: req.params.id
     },
-  })
+    attributes: [
+      'id',
+      'title',
+      'post_body',
+      'createdAt'
+  ],
+  include: [
+      {
+          model: Comment,
+          attributes: [
+              'id', 'comment_text', 'post_id',
+               'user_id', 'createdAt'
+          ],
+          include: {
+              model: User,
+              attributes: ['username']
+          }
+      },
+      {
+          model: User,
+          attributes: ['username']
+      }
+  ]
+})
     .then((dbPostData) => {
       if (dbPostData) {
         const post = dbPostData.get({ plain: true });
@@ -46,21 +89,21 @@ router.get("/edit/:id", withAuth, (req, res) => {
 });
 
 //GET - create a new post
-router.get("/create", (req, res) => {
-  Post.findAll({
-    where: {
-      user_id: req.session.user.id,
-    },
-  })
-    .then((dbPostData) => {
-      //  serialize data for front-end
-      const post = dbPostData.map((post) => post.get({ plain: true }));
-      res.render("create-post", { post, loggedIn: true });
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).json(err);
-    });
-});
+// router.get("/create", (req, res) => {
+//   Post.findAll({
+//     where: {
+//       user_id: req.session.user.id,
+//     },
+//   })
+//     .then((dbPostData) => {
+//       //  serialize data for front-end
+//       const post = dbPostData.map((post) => post.get({ plain: true }));
+//       res.render("create-post", { post, loggedIn: true });
+//     })
+//     .catch((err) => {
+//       console.log(err);
+//       res.status(500).json(err);
+//     });
+// });
 
 module.exports = router;

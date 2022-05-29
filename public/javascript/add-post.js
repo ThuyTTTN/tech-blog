@@ -1,3 +1,11 @@
+const addPostBtn = document.querySelector('#add-post-btn');
+const createPostCard = document.querySelector('#create-post-card');
+
+function toHide(event) {
+    createPostCard.classList.remove('hide');
+    addPostBtn.classList.add('hide');
+};
+
 
 async function newFormHandler(event) {
     event.preventDefault();
@@ -24,4 +32,4 @@ async function newFormHandler(event) {
   }
   
   document.querySelector('.new-post-form').addEventListener('submit', newFormHandler);
- 
+  addPostBtn.addEventListener('click', toHide); 

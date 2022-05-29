@@ -1,22 +1,31 @@
 const router = require("express").Router();
 const { Post, User, Comment } = require("../../models");
 const withAuth = require("../../utils/auth");
-const sequelize = require("../../config/connection");
 
 // GET all users
 router.get("/", (req, res) => {
   Post.findAll({
+    attributes: [
+      'id',
+      'title',
+      'post_body',
+      'createdAt'
+    ],
+    order: [['createdAt', 'DESC']],
     include: [
       {
         model: Comment,
+        attributes: ['id', 'comment_text', 'post_id', 'user_id', 'createdAt'],
         include: {
           model: User,
-        },
+          attributes: ['username']
+        }
       },
       {
         model: User,
-      },
-    ],
+        attributes: ['username']
+      }
+    ]
   })
     .then((dbPostData) => res.json(dbPostData))
     .catch((err) => {
@@ -63,7 +72,7 @@ router.post("/", withAuth, (req, res) => {
   Post.create({
     // ...req.body,
     title: req.body.title,
-    post_body: req.body.post,
+    post_body: req.body.post_body,
     user_id: req.session.user_id,
   })
     .then((dbPostData) => res.json(dbPostData))
@@ -78,12 +87,12 @@ router.put("/:id", withAuth, (req, res) => {
   Post.update(
     {
       title: req.body.title,
-      post_body: req.body.post_body,
+      post_body: req.body.post_body
     },
     {
       where: {
-        id: req.params.id,
-      },
+        id: req.params.id
+      }
     }
   )
     .then((dbPostData) => {
